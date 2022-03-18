@@ -1,0 +1,24 @@
+{
+    "name": "bidkar/brawlhalla",
+    "description": "Proyecto para manipular jugadores del Brawlhalla",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "10.0.x-dev"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bidkar\\Brawlhalla\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bidkar Aragón Cárdenas",
+            "email": "bidkar@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "ramsey/uuid": "4.x-dev"
+    }
+}
