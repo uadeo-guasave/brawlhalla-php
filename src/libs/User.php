@@ -22,20 +22,20 @@ class User
         $this->name = $value;
     }
 
-    public function validateName($name)
+    public static function validateName($name)
     {
         # entre 8 y 16 caracteres
         # solo letras minusculas y números
         return (bool) preg_match("/^[a-z0-9]{8,16}$/", $name);
     }
 
-    public function validatePassword($password)
+    public static function validatePassword($password)
     {
         $regex = '/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([A-Za-z0-9]){6,12}$/';
         return (bool) preg_match($regex, $password);
     }
 
-    public function validateEmail($email)
+    public static function validateEmail($email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
