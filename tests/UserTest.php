@@ -14,13 +14,30 @@ class UserTest extends TestCase
         $this->assertFalse($name);
     }
 
-    // public function test_password()
-    // {
-    //     # ...
-    // }
+    public function test_password()
+    {
+        $password = User::validatePassword('hjfye3ERi');
+        $this->assertTrue($password);
 
-    // public function test_email()
-    // {
-    //     # ...
-    // }
+        $password = User::validatePassword('');
+        $this->assertFalse($password);
+    }
+
+    public function test_email()
+    {
+        $email = User::validateEmail('bidkar@gmail.com');
+        $this->assertTrue($email);
+
+        $email = User::validateEmail('bidkar@@gmail.com');
+        $this->assertFalse($email);
+    }
+
+    public function test_new_user()
+    {
+        $user = User::createNewUser('','','');
+        $this->assertFalse($user);
+
+        $user = User::createNewUser('bidkar123', '1234ABcdop', 'bidkar@gmail.com');
+        $this->assertInstanceOf('\Bidkar\Brawlhalla\Libs\User', $user);
+    }
 }

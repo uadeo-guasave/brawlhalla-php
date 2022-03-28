@@ -12,6 +12,29 @@ class User
     public $created_at;
     public $status; // 1=Active 0=Inactive
 
+    public static function createNewUser(string $name, string $password, string $email)
+    {
+        if (
+            ! User::validateName($name) or
+            ! User::validatePassword($password) or
+            ! User::validateEmail($email)
+        ) {
+            return false;
+        }
+
+        $user = new User();
+        $user->id = random_int(1, 100); // debe salir de la bdd
+        $user->uuid = \Ramsey\Uuid\v4();
+        $user->created_at = date('Y-m-d H:i:s'); # 2022-03-25 12:28:56
+        $user->status = 1;
+        $user->setName($name);
+        $user->setPassword($password);
+        $user->setEmail($email);
+
+        # conectar a la base de datos y registrar al nuevo usuario
+        return $user;
+    }
+
     public function getName()
     {
         return $this->name;
@@ -20,6 +43,16 @@ class User
     public function setName($value)
     {
         $this->name = $value;
+    }
+
+    public function setPassword($value)
+    {
+        $this->password = $value;
+    }
+
+    public function setEmail($value)
+    {
+        $this->email = $value;
     }
 
     public static function validateName($name)
@@ -37,6 +70,9 @@ class User
 
     public static function validateEmail($email)
     {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
+        if (filter_var($email, FILTER_VALIDATE_EMAIL))
+            return true;
+        else
+            return false;
     }
 }

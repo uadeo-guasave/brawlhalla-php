@@ -1,1 +1,1 @@
-{"version":1,"defects":{"UserTest::":4,"UserTest::test_password":3,"UserTest::test_email":3},"times":{"UserTest::":0.007,"UserTest::test_name":0.001,"UserTest::test_password":0.003,"UserTest::test_email":0}}
+{"version":1,"defects":{"UserTest::":4,"UserTest::test_password":5,"UserTest::test_email":5,"UserTest::test_new_user":6},"times":{"UserTest::":0.007,"UserTest::test_name":0.001,"UserTest::test_password":0,"UserTest::test_email":0.002,"UserTest::test_new_user":0.004}}
