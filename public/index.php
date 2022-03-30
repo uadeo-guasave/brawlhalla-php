@@ -1,4 +1,7 @@
 <?php
+
+use Bidkar\Brawlhalla\Libs\MysqlConnection;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $usuario = new \Bidkar\Brawlhalla\Libs\User();
@@ -22,3 +25,6 @@ if ($usuario->validateEmail($email))
     echo "$email correcto";
 else
     echo "$email incorrecto";
+
+$cnn = new MysqlConnection();
+var_dump($cnn);
