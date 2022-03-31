@@ -26,5 +26,4 @@ if ($usuario->validateEmail($email))
 else
     echo "$email incorrecto";
 
-$cnn = new MysqlConnection();
-var_dump($cnn);
+$cnn = new MysqlConnection('127.0.0.1','','','',3306);

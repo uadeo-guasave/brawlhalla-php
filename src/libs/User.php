@@ -12,6 +12,8 @@ class User
     public $created_at;
     public $status; // 1=Active 0=Inactive
 
+    # CRUD: Create, Read, Update, Delete
+    # SQL -> DDL y DML (Data Definition Lang y Data Manipulation Lang)
     public static function createNewUser(string $name, string $password, string $email)
     {
         if (
