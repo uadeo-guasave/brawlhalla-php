@@ -2,6 +2,8 @@
 
 namespace Bidkar\Brawlhalla\Libs;
 
+use Bidkar\Brawlhalla\Libs\MysqlConnection;
+
 class User
 {
     public $id;
@@ -25,15 +27,23 @@ class User
         }
 
         $user = new User();
-        $user->id = random_int(1, 100); // debe salir de la bdd
         $user->uuid = \Ramsey\Uuid\v4();
-        $user->created_at = date('Y-m-d H:i:s'); # 2022-03-25 12:28:56
-        $user->status = 1;
         $user->setName($name);
         $user->setPassword($password);
         $user->setEmail($email);
 
         # conectar a la base de datos y registrar al nuevo usuario
+        # abrir conexion a bdd
+        $cnn = new MysqlConnection();
+        # definir consulta sql para registrar nuevo usuario
+        $query = sprintf("INSERT INTO users (uuid,name,password,email) " .
+                 "VALUES ('%s','%s','%s','%s')",$user->uuid,$name,$password,$email);
+        $rst = $cnn->cnn->query($query);
+        if (! $rst) {
+            return false;
+        }
+
+        $user->id = $cnn->cnn->insert_id;
         return $user;
     }
 
