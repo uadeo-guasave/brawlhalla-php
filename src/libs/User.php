@@ -37,14 +37,50 @@ class User
         $cnn = new MysqlConnection();
         # definir consulta sql para registrar nuevo usuario
         $query = sprintf("INSERT INTO users (uuid,name,password,email) " .
-                 "VALUES ('%s','%s','%s','%s')",$user->uuid,$name,$password,$email);
-        $rst = $cnn->cnn->query($query);
+                 "VALUES ('%s','%s',sha('%s'),'%s')",$user->uuid,$name,$password,$email);
+        $rst = $cnn->query($query);
+        
+        # cerrar conexión despues de ejecutar la consulta
+        $cnn->close();
+
         if (! $rst) {
             return false;
         }
 
-        $user->id = $cnn->cnn->insert_id;
+        $user->id = $cnn->insert_id;
         return $user;
+    }
+
+    public static function login(string $name, string $password)
+    {
+        $sql = sprintf("select id,uuid,name,email from users
+            where name='%s' and password=sha('%s')", $name, $password);
+        $cnn = new MysqlConnection();
+        $rst = $cnn->query($sql);
+        # validar que la consulta se ejecutó correctamente
+        if (! $rst) {
+            die("Error al ejecutar la consulta: $sql");
+        }
+
+        # cerrar conexión despues de ejecutar la consulta
+        $cnn->close();
+
+        # contar el numero de registros que regresó la consulta
+        if ($rst->num_rows == 1) {
+            # encontró al usuario
+            # obtener el registro del usuario encontrado
+            $row = $rst->fetch_object();
+            # crear un objeto de usuario nuevo para pasar los valores recibidos
+            $user = new User();
+            $user->id = $row->id;
+            $user->uuid = $row->uuid;
+            $user->name = $row->name;
+            $user->email = $row->email;
+            return $user;
+        } else {
+            # no encontró al usuario
+            return false;
+        }
     }
 
     public function getName()
